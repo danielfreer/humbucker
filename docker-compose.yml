@@ -27,6 +27,7 @@ services:
       MYSQL_USER: 'humbucker'
       MYSQL_PASSWORD: 'password'
       MYSQL_DATABASE: 'humbucker'
+    command: mysqld --sql_mode=""
     volumes:
       - ./dumps:/docker-entrypoint-initdb.d
     networks:
