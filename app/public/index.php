@@ -6,6 +6,7 @@ require_once('../CallOrders.php');
 require_once('../ReferralOrders.php');
 require_once('../SignatureOrders.php');
 require_once('../MiscOrders.php');
+require_once('../DateFixer.php');
 
 $repo = new Repository();
 $candy = new CandyOrders();
@@ -13,17 +14,23 @@ $call = new CallOrders();
 $referral = new ReferralOrders();
 $signature = new SignatureOrders();
 $misc = new MiscOrders();
+$dateFixer = new DateFixer();
 
 $orders = $repo->orders();
 $candyOrders = $candy->filter($orders);
 $callOrders = $call->filter($orders);
 $referralOrders = $referral->filter($orders);
 $signatureOrders = $signature->filter($orders);
-$miscOrders = $misc->filter($candyOrders, $callOrders, $referralOrders, $signatureOrders, $orders)
+$miscOrders = $misc->filter($candyOrders, $callOrders, $referralOrders, $signatureOrders, $orders);
+
+$fixedOrders = $dateFixer->ingest($orders);
+foreach ($fixedOrders as $fixedOrder) {
+    $repo->updateExpectedShipdate($fixedOrder->orderid, $fixedOrder->shipdate_expected);
+}
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="">
     <head>
         <title>Report on Order Comments</title>
     </head>
