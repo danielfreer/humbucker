@@ -1,13 +1,10 @@
 <?php
 
-try {
-    $pdo = new PDO("mysql:host=sql;dbname=humbucker", "humbucker", "password");
-    $sql = 'SELECT * FROM sweetwater_test';
-    $query = $pdo->query($sql);
-    $query->setFetchMode(PDO::FETCH_ASSOC);
-} catch (PDOException $pe) {
-    die("Could not connect to the database: " . $pe->getMessage());
-}
+require_once('../Repository.php');
+
+
+$repo = new Repository();
+$orders = $repo->orders();
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,13 +22,13 @@ try {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = $query->fetch()): ?>
+                    <?php forEach ($orders as $order ): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['orderid']) ?></td>
-                            <td><?php echo htmlspecialchars($row['comments']) ?></td>
-                            <td><?php echo htmlspecialchars($row['shipdate_expected']) ?></td>
+                            <td><?php echo htmlspecialchars($order->orderid) ?></td>
+                            <td><?php echo htmlspecialchars($order->comments) ?></td>
+                            <td><?php echo htmlspecialchars($order->shipdate_expected) ?></td>
                         </tr>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         <h2>Comments about call me / don't call me</h2>
