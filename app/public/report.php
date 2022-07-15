@@ -1,9 +1,10 @@
 <?php
 
 require_once('../Repository.php');
-
+require_once('../CandyOrders.php');
 
 $repo = new Repository();
+$candyOrders = new CandyOrders();
 $orders = $repo->orders();
 ?>
 <!DOCTYPE html>
@@ -22,7 +23,7 @@ $orders = $repo->orders();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php forEach ($orders as $order ): ?>
+                    <?php forEach ($candyOrders->filter($orders) as $order ): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($order->orderid) ?></td>
                             <td><?php echo htmlspecialchars($order->comments) ?></td>
