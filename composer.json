@@ -1,0 +1,14 @@
+{
+  "name": "danielfreer/humbucker",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Daniel A. Freer",
+      "email": "danielfreer@gmail.com"
+    }
+  ],
+  "require": {
+  }
+}
