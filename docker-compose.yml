@@ -20,6 +20,13 @@ services:
     networks:
       - private
 
+  composer:
+    image: composer:2.3.9
+    volumes:
+      - ./app:/app
+    networks:
+      - private
+
   sql:
     image: mysql:8.0.29
     environment:
