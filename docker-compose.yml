@@ -28,12 +28,9 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_DATABASE: 'humbucker'
     volumes:
-      - mysql-database:/var/lib/mysql
+      - ./dumps:/docker-entrypoint-initdb.d
     networks:
       - private
-
-volumes:
-  mysql-database: {}
 
 networks:
   public: {}
