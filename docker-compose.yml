@@ -1,0 +1,40 @@
+services:
+
+  http:
+    image: nginx:1.23.0
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./app:/app
+    ports:
+      - "80:80"
+    networks:
+      - public
+      - private
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+      - ./app:/app
+    networks:
+      - private
+
+  sql:
+    image: mysql:8.0.29
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_USER: 'humbucker'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_DATABASE: 'humbucker'
+    volumes:
+      - mysql-database:/var/lib/mysql
+    networks:
+      - private
+
+volumes:
+  mysql-database: {}
+
+networks:
+  public: {}
+  private: {}
